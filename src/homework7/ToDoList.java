@@ -9,7 +9,7 @@ public class ToDoList
 
 	public ToDoList()
 	{
-		first = null;
+		this.first = null;
 	}
 	public ToDoList(Task first)
 	{
@@ -22,7 +22,8 @@ public class ToDoList
 	 */
 	public void addFirst(Task newTask)
 	{
-		// YOUR CODE HERE
+		newTask.next = this.first;
+		this.first = newTask;
 	}
 
 	/**
@@ -31,7 +32,16 @@ public class ToDoList
 	 */
 	public void addLast(Task newTask)
 	{
-		// YOUR CODE HERE
+		if (this.first == null) { this.first = newTask; }
+		else
+		{
+			Task current = this.first;
+			while (current.next != null)
+			{
+				current = current.next;
+			}
+			current.next = newTask;
+		}
 	}
 
 	/**
@@ -40,7 +50,23 @@ public class ToDoList
 	 */
 	public void setComplete(String name)
 	{
-		// YOUR CODE HERE
+		if (this.first == null) { return; }
+		else
+		{
+			Task current = this.first;
+			if (current.getName().equals(name))
+			{
+				current.setComplete(true);
+			}
+			while (current.next != null)
+			{
+				current = current.next;
+				if (current.getName().equals(name))
+				{
+					current.setComplete(true);
+				}
+			}
+		}
 	}
 
 	/**
@@ -50,7 +76,20 @@ public class ToDoList
 	 */
 	public Task get(int i)
 	{
-		// YOUR CODE HERE
+		if (i < 0 || this.first == null) { return null; }
+		else
+		{
+			if (i == 0) { return this.first; }
+			Task current = this.first;
+			int count = 0;
+			while (current.next != null)
+			{
+				current = current.next;
+				count++;
+				if (count == i) { return current; }
+			}
+			return null;
+		}
 	}
 
 	/**
@@ -62,6 +101,25 @@ public class ToDoList
 	 */
 	public void print()
 	{
-		// YOUR CODE HERE
+		if (this.first == null) { return; }
+		else
+		{
+			Task current = this.first;
+			int count = 1;
+			if (!current.getComplete())
+			{
+				System.out.println(count + ". " + current.getName());
+				count++;
+			}
+			while (current.next != null)
+			{
+				current = current.next;
+				if (!current.getComplete())
+				{
+					System.out.println(count + ". " + current.getName());
+					count++;
+				}
+			}
+		}
 	}
 }
