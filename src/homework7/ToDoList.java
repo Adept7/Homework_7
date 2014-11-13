@@ -50,46 +50,34 @@ public class ToDoList
 	 */
 	public void setComplete(String name)
 	{
-		if (this.first == null) { return; }
-		else
+		Task current = this.first;
+		while (current != null)
 		{
-			Task current = this.first;
 			if (current.getName().equals(name))
 			{
 				current.setComplete(true);
 			}
-			while (current.next != null)
-			{
-				current = current.next;
-				if (current.getName().equals(name))
-				{
-					current.setComplete(true);
-				}
-			}
+			current = current.next;
 		}
 	}
 
 	/**
 	 * Return the Task at position i, if one exists. Otherwise, return null. The first item is at index 0.
 	 * @param i the index to check
-	 * @return the Task at that index
+	 * @return the Task at that index or null if nothing is at that index
 	 */
 	public Task get(int i)
 	{
-		if (i < 0 || this.first == null) { return null; }
-		else
+		if (i < 0) { return null; }
+		Task current = this.first;
+		int count = 0;
+		while (current != null)
 		{
-			if (i == 0) { return this.first; }
-			Task current = this.first;
-			int count = 0;
-			while (current.next != null)
-			{
-				current = current.next;
-				count++;
-				if (count == i) { return current; }
-			}
-			return null;
+			if (count == i) { return current; }
+			count++;
+			current = current.next;
 		}
+		return null;
 	}
 
 	/**
@@ -101,25 +89,16 @@ public class ToDoList
 	 */
 	public void print()
 	{
-		if (this.first == null) { return; }
-		else
+		Task current = this.first;
+		int count = 1;
+		while (current != null)
 		{
-			Task current = this.first;
-			int count = 1;
 			if (!current.getComplete())
 			{
 				System.out.println(count + ". " + current.getName());
 				count++;
 			}
-			while (current.next != null)
-			{
-				current = current.next;
-				if (!current.getComplete())
-				{
-					System.out.println(count + ". " + current.getName());
-					count++;
-				}
-			}
+			current = current.next;
 		}
 	}
 }
